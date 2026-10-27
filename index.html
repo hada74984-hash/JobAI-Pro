@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>JobAI Pro — AI Career Assistant</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-mark">J</span><span>JobAI <b>Pro</b></span></a>
+  <span class="secure-pill">● Private AI workspace</span>
+</header>
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">YOUR AI CAREER ASSISTANT</div>
+    <h1>Make your next career move<br><span>with confidence.</span></h1>
+    <p>Draft job-ready documents, compare your resume with a job description, and prepare for your next application.</p>
+    <div class="notice">AI can make mistakes. Review all details before using or sending any generated document.</div>
+  </section>
+
+  <nav class="tabs" aria-label="Tools">
+    <button class="tab active" data-panel="resume">Resume Builder</button>
+    <button class="tab" data-panel="ats">ATS Checker</button>
+    <button class="tab" data-panel="cover">Cover Letter</button>
+    <button class="tab" data-panel="assistant">Job Assistant</button>
+  </nav>
+
+  <section class="panel active" id="resume">
+    <div class="panel-head"><div><h2>AI Resume Builder</h2><p>Describe your background and the role you want.</p></div><span class="icon">✦</span></div>
+    <label>Full name <input id="resumeName" placeholder="e.g. Asha Sharma"></label>
+    <label>Target job title <input id="resumeRole" placeholder="e.g. Junior Graphic Designer"></label>
+    <label>Skills, education, projects and experience <textarea id="resumeDetails" rows="6" placeholder="Add your real skills, education, projects, achievements and work experience. Don't include sensitive personal data."></textarea></label>
+    <button class="primary" data-task="resume" data-output="resumeResult">Generate resume draft ✦</button>
+    <div class="result" id="resumeResult" hidden></div>
+  </section>
+
+  <section class="panel" id="ats">
+    <div class="panel-head"><div><h2>ATS Resume Checker</h2><p>Get a practical comparison against the job description.</p></div><span class="icon">⌕</span></div>
+    <label>Resume text <textarea id="atsResume" rows="6" placeholder="Paste the text from your resume"></textarea></label>
+    <label>Job description <textarea id="atsJob" rows="6" placeholder="Paste the job description"></textarea></label>
+    <button class="primary" data-task="ats" data-output="atsResult">Review match & suggest improvements ✦</button>
+    <div class="result" id="atsResult" hidden></div>
+  </section>
+
+  <section class="panel" id="cover">
+    <div class="panel-head"><div><h2>AI Cover Letter</h2><p>Create a tailored first draft based on information you provide.</p></div><span class="icon">✉</span></div>
+    <label>Your relevant skills and experience <textarea id="coverBackground" rows="4" placeholder="Mention relevant skills, projects, education and achievements"></textarea></label>
+    <label>Job title and company <input id="coverRole" placeholder="e.g. Customer Support Intern at Example Co."></label>
+    <label>Job description (optional) <textarea id="coverJob" rows="4" placeholder="Paste relevant parts of the job listing"></textarea></label>
+    <button class="primary" data-task="cover" data-output="coverResult">Write cover letter ✦</button>
+    <div class="result" id="coverResult" hidden></div>
+  </section>
+
+  <section class="panel" id="assistant">
+    <div class="panel-head"><div><h2>Job Assistant</h2><p>Get a search plan and application preparation checklist.</p></div><span class="icon">↗</span></div>
+    <label>Role and location / remote preference <input id="jobTarget" placeholder="e.g. entry-level data analyst, remote in India"></label>
+    <label>Skills, experience level and preferences <textarea id="jobPrefs" rows="4" placeholder="Your skills, experience level, preferred schedule, industries"></textarea></label>
+    <button class="primary" data-task="assistant" data-output="assistantResult">Create my job-search plan ✦</button>
+    <div class="result" id="assistantResult" hidden></div>
+  </section>
+
+  <footer><p>JobAI Pro · Your information is sent to the AI provider only when you click Generate. Avoid entering passwords, government ID numbers, or other sensitive data.</p></footer>
+</main>
+<script src="/app.js"></script>
+</body></html>
