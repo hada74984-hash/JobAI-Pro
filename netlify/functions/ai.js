@@ -1,15 +1,4 @@
 export default async (request) => {
-  if (request.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type"
-      }
-    });
-  }
-
   if (request.method !== "POST") {
     return new Response(
       JSON.stringify({ error: "POST method required" }),
@@ -34,11 +23,20 @@ export default async (request) => {
     }
 
     const body = await request.json();
-    const prompt = String(body.prompt || "").trim();
+    const task = String(body.task || "").trim();
+    const input = body.input || {};
 
-    if (!prompt || prompt.length > 8000) {
+    const prompt = `You are JobAI Pro, a helpful career assistant.
+Task: ${task}
+User information:
+${JSON.stringify(input, null, 2)}
+
+Help the user with this career task. Do not invent qualifications or work experience.
+Return a clear, useful response.`;
+
+    if (!task || !Object.keys(input).length) {
       return new Response(
-        JSON.stringify({ error: "Enter text up to 8000 characters" }),
+        JSON.stringify({ error: "Task and input are required." }),
         {
           status: 400,
           headers: { "Content-Type": "application/json" }
@@ -56,8 +54,6 @@ export default async (request) => {
         },
         body: JSON.stringify({
           model: "gpt-4.1-mini",
-          instructions:
-            "You are JobAI Pro, a helpful career assistant. Help users improve resumes, understand job descriptions, write cover letters, and prepare for interviews. Never invent qualifications or work experience.",
           input: prompt
         })
       }
@@ -67,7 +63,9 @@ export default async (request) => {
 
     if (!result.ok) {
       return new Response(
-        JSON.stringify({ error: "AI request failed. Check API settings." }),
+        JSON.stringify({
+          error: "AI request failed. Check API settings and billing."
+        }),
         {
           status: 502,
           headers: { "Content-Type": "application/json" }
@@ -75,20 +73,17 @@ export default async (request) => {
       );
     }
 
-    const answer = (data.output || [])
+    const text = (data.output || [])
       .flatMap(item => item.content || [])
       .filter(item => item.type === "output_text")
       .map(item => item.text)
       .join("\n");
 
     return new Response(
-      JSON.stringify({ answer }),
+      JSON.stringify({ text }),
       {
         status: 200,
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*"
-        }
+        headers: { "Content-Type": "application/json" }
       }
     );
   } catch (error) {
