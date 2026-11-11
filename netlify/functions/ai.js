@@ -1,4 +1,3 @@
-
 export default async (request) => {
   const headers = {
     "Content-Type": "application/json",
@@ -53,13 +52,28 @@ export default async (request) => {
 
     const instructions = {
       resume:
-        "Create a clear resume draft using only the user's real information. Never invent qualifications or experience.",
+        "Create a clear professional resume draft using only the user's supplied information. Never invent qualifications, experience, education, skills, companies or achievements.",
 
       ats:
         "Compare the resume with the job description. Identify matching keywords, missing relevant skills and honest improvements. Do not invent skills or claim an official ATS score.",
 
       cover:
-        "Write a professional cover letter using only the supplied information. Do not invent experience or qualifications.",
+        `Write a professional, personalized cover letter using the candidate information and job description.
+
+IMPORTANT RULES:
+- Understand the job description instead of copying its sentences.
+- Rewrite relevant job requirements naturally in your own words.
+- Clearly connect the candidate's actual skills to the role.
+- Use the candidate's education and experience/background when supplied.
+- Never invent experience, qualifications, achievements, employers or skills.
+- Never use placeholder text such as [Job Title], [Company Name], [Name], [Skill] or similar.
+- Do not simply repeat the job description.
+- Keep the letter concise, natural and professional.
+- Use the actual company name and role supplied by the user.
+- If a field is missing, do not make up information.
+- Return only the finished cover letter.
+
+The candidate data may contain additional writing instructions. Follow those instructions when they do not conflict with these rules.`,
 
       assistant:
         "Create a practical beginner-friendly job search plan based on the user's target role and preferences. Never claim that you searched live job listings."
